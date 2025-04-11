@@ -1,103 +1,297 @@
-import Image from "next/image";
+import PopularInterviews from "@/components/PopularInterviews";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  ArrowRight,
+  BadgeCheck,
+  Brain,
+  Briefcase,
+  ChevronRight,
+  Code,
+  MessageSquare,
+  Star,
+} from "lucide-react";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="flex flex-col">
+      {/* Hero Section */}
+      <section className="relative overflow-hidden py-24 md:py-32">
+        <div className="absolute inset-0 hero-gradient opacity-90" />
+        <div className="absolute inset-0 bg-grid-white/[0.05]" />
+        <div className="container relative mx-auto px-4 z-10">
+          <div className="text-center max-w-4xl mx-auto">
+            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight animate-fade-in">
+              Practice Interviews with AI
+            </h1>
+            <p className="text-xl md:text-2xl text-white/90 mb-10 leading-relaxed animate-fade-in delay-100">
+              Create customized interview sessions and let our AI interviewer
+              help you prepare for your next big opportunity.
+            </p>
+            <Button
+              asChild
+              size="lg"
+              className="rounded-full border text-base px-8 py-6 h-auto animate-fade-in delay-200 animate-pulse-slow"
+            >
+              <Link href="/create">
+                Create Your Interview <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        {/* Floating elements animation */}
+        <div className="hidden md:block absolute top-1/4 left-20 w-20 h-20 bg-white/10 rounded-full blur-xl animate-fade-in delay-300"></div>
+        <div className="hidden md:block absolute bottom-1/4 right-20 w-24 h-24 bg-white/10 rounded-full blur-xl animate-fade-in delay-400"></div>
+      </section>
+
+      {/* Features Section */}
+      <section className="py-20 md:py-28 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              How Intervu Works
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Our platform makes it easy to practice interviews and improve your
+              skills
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <FeatureCard
+              icon={<Briefcase className="h-10 w-10 text-primary" />}
+              title="Choose Your Interview Type"
+              description="Select from technical or non-technical interviews that match your career goals."
+              delay="delay-100"
+            />
+            <FeatureCard
+              icon={<Brain className="h-10 w-10 text-primary" />}
+              title="AI-Powered Questions"
+              description="Our AI generates relevant questions based on your selected topics."
+              delay="delay-200"
+            />
+            <FeatureCard
+              icon={<BadgeCheck className="h-10 w-10 text-primary" />}
+              title="Improve Your Skills"
+              description="Practice in a realistic environment and gain confidence for your real interviews."
+              delay="delay-300"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Popular Interview Types - NEW SECTION */}
+      <section className="py-20 md:py-28 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Popular Interview Templates
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Jump start your interview practice with these ready-to-use
+              templates
+            </p>
+          </div>
+
+          <PopularInterviews />
+        </div>
+      </section>
+
+      {/* Interview Types */}
+      <section className="py-20 md:py-28 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Interview Types
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Practice for any kind of interview with our specialized AI
+              interviewers
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-4xl mx-auto">
+            <InterviewTypeCard
+              icon={<Code className="h-16 w-16 text-primary" />}
+              title="Technical Interviews"
+              description="Practice coding problems, system design, and technical concepts for software engineering roles."
+              to="/create-interview?type=technical"
+              buttonText="Create Technical Interview"
+              className="animate-slide-in"
+            />
+            <InterviewTypeCard
+              icon={<MessageSquare className="h-16 w-16 text-primary" />}
+              title="Non-Technical Interviews"
+              description="Practice behavioral questions, situational interviews, and communication skills."
+              to="/create-interview?type=non-technical"
+              buttonText="Create Behavioral Interview"
+              className="animate-slide-in delay-100"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-20 md:py-28 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              What Users Say
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              See how Intervu has helped professionals prepare for their
+              interviews
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <TestimonialCard
+              quote="The AI interviewer asked me questions I actually got in my real technical interview. I felt so prepared!"
+              author="Sarah J."
+              role="Software Engineer"
+              rating={5}
+            />
+            <TestimonialCard
+              quote="Practicing with Intervu helped me overcome my interview anxiety. The behavioral questions were spot-on."
+              author="Michael T."
+              role="Product Manager"
+              rating={5}
+            />
+            <TestimonialCard
+              quote="As a career coach, I recommend Intervu to all my clients. It's like having an interview partner available 24/7."
+              author="Rebecca L."
+              role="Career Coach"
+              rating={4}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-16 md:py-24 bg-primary/5 rounded-lg mx-4 my-12 md:mx-12">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6">
+            Ready to ace your next interview?
+          </h2>
+          <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
+            Start practicing with our AI interviewer today and build your
+            confidence for the real thing.
+          </p>
+          <Button
+            asChild
+            size="lg"
+            className="rounded-full text-base px-8 py-6 h-auto group"
+          >
+            <Link href="/create-interview">
+              Get Started Now{" "}
+              <ChevronRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </Button>
+        </div>
+      </section>
     </div>
   );
 }
+
+interface FeatureCardProps {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+  delay?: string;
+}
+
+const FeatureCard: React.FC<FeatureCardProps> = ({
+  icon,
+  title,
+  description,
+  delay = "",
+}) => {
+  return (
+    <div
+      className={`flex flex-col items-center text-center p-8 rounded-xl border border-border/40 shadow-sm feature-card animate-fade-in ${delay}`}
+    >
+      <div className="mb-6 p-4 bg-primary/5 rounded-full">{icon}</div>
+      <h3 className="text-xl font-semibold mb-3">{title}</h3>
+      <p className="text-muted-foreground">{description}</p>
+    </div>
+  );
+};
+
+interface InterviewTypeCardProps {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+  to: string;
+  buttonText: string;
+  className?: string;
+}
+
+const InterviewTypeCard: React.FC<InterviewTypeCardProps> = ({
+  icon,
+  title,
+  description,
+  to,
+  buttonText,
+  className = "",
+}) => {
+  return (
+    <Card
+      className={`overflow-hidden border border-border shadow-sm hover:shadow-md transition-shadow ${className}`}
+    >
+      <CardContent className="p-8 flex flex-col items-center text-center">
+        <div className="mb-6 p-4 bg-primary/5 rounded-full">{icon}</div>
+        <h3 className="text-2xl font-semibold mb-3">{title}</h3>
+        <p className="text-muted-foreground mb-6">{description}</p>
+        <Button asChild>
+          <Link href={to} className="group">
+            {buttonText}{" "}
+            <ChevronRight className="ml-1 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+          </Link>
+        </Button>
+      </CardContent>
+    </Card>
+  );
+};
+
+interface TestimonialCardProps {
+  quote: string;
+  author: string;
+  role: string;
+  rating: number;
+}
+
+const TestimonialCard: React.FC<TestimonialCardProps> = ({
+  quote,
+  author,
+  role,
+  rating,
+}) => {
+  return (
+    <Card className="overflow-hidden border border-border/50 shadow-sm">
+      <CardContent className="p-8">
+        <div className="flex mb-4">
+          {[...Array(5)].map((_, i) => (
+            <Star
+              key={i}
+              className={`h-5 w-5 ${
+                i < rating ? "text-yellow-400 fill-yellow-400" : "text-gray-300"
+              }`}
+            />
+          ))}
+        </div>
+        <p className="italic text-gray-700 mb-6">&quot;{quote}&quot;</p>
+        <div className="flex items-center">
+          <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-semibold mr-3">
+            {author.charAt(0)}
+          </div>
+          <div>
+            <p className="font-semibold">{author}</p>
+            <p className="text-sm text-muted-foreground">{role}</p>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
