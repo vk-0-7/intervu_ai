@@ -3,7 +3,12 @@
 import { auth, db } from "@/firebase/admin";
 import { cookies } from "next/headers";
 
-export async function signUP(params: any) {
+export async function signUP(params: {
+  uid: string;
+  name: string;
+  email: string;
+  password?: string;
+}) {
   const { uid, name, email } = params;
 
   try {
@@ -33,7 +38,7 @@ export async function signUP(params: any) {
   }
 }
 
-export async function signIN(params: any) {
+export async function signIN(params: { email: string; idToken: string }) {
   const { email, idToken } = params;
   try {
     const userRecord = await auth.getUserByEmail(email);
