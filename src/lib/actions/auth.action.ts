@@ -1,6 +1,7 @@
 "use server";
 
 import { auth, db } from "@/firebase/admin";
+import { UserProps } from "@/types";
 import { cookies } from "next/headers";
 
 export async function signUP(params: {
@@ -92,7 +93,7 @@ export async function getCurrentUser() {
     if (!userRecord.exists) {
       return null;
     }
-    return { ...userRecord.data(), id: userRecord.id };
+    return { ...userRecord.data(), id: userRecord.id } as UserProps;
   } catch (error) {
     console.error("Error verifying session cookie:", error);
     return null;
