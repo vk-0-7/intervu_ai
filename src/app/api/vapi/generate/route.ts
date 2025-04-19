@@ -30,7 +30,7 @@ export async function POST(request: Request) {
     });
 
     const intervue = {
-      id: userid,
+      userId: userid,
       questions: JSON.parse(text),
       role: role,
       level,

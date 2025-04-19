@@ -1,5 +1,6 @@
 "use client";
 
+import { interviewer } from "@/lib/constants";
 import { vapi } from "@/lib/vapi.sdk";
 import { Message } from "ai";
 import { useRouter } from "next/navigation";
@@ -9,6 +10,8 @@ type Props = {
   username: string;
   userid: string;
   type: string;
+  interviewid?: string;
+  questions?: string[];
 };
 
 enum CallStatus {
@@ -23,7 +26,7 @@ type SavedMessages = {
   content: string;
 }[];
 
-const Agent = ({ username, userid, type }: Props) => {
+const Agent = ({ username, userid, type, interviewid, questions }: Props) => {
   const [isSpeaking, setisSpeaking] = useState(false);
   const [callStatus, setCallStatus] = useState<CallStatus>(CallStatus.INACTIVE);
   const [messages, setMessages] = useState<SavedMessages>([]);
@@ -78,18 +81,31 @@ const Agent = ({ username, userid, type }: Props) => {
   }, [messages, callStatus, userid, type]);
 
   const handleCall = async () => {
-    try {
-      const call = await vapi.start(
-        process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID as string,
-        { variableValues: { userid: userid, username: username } }
-      );
-    } catch (error) {
-      console.log(error);
+    if (type == "generate") {
+      try {
+        await vapi.start(process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID as string, {
+          variableValues: { userid: userid, username: username },
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      let formattedQuestion = "";
+      formattedQuestion = questions
+        ?.map((question: string) => `- ${question}`)
+        .join("\n");
+
+      await vapi.start(interviewer, {
+        variableValues: {
+          questions: formattedQuestion,
+        },
+      });
     }
   };
 
   const handleDisconnect = async () => {
     setCallStatus(CallStatus.FINISHED);
+
     vapi.stop();
   };
   const lastMessage = messages[messages.length - 1]?.content;
@@ -105,21 +121,24 @@ const Agent = ({ username, userid, type }: Props) => {
       </h2>
 
       {/* Cards */}
-      <div className="flex gap-8 mb-12 w-[50%] ">
-        <div className="bg-white/10 backdrop-blur-md p-6 rounded-xl text-center  shadow-lg transform transition-transform hover:scale-105 hover:shadow-2xl w-[50%] aspect-[3/2]">
-          <div className="mb-4">
+      <div className="flex gap-8 mb-12 w-[50%] justify-center items-center">
+        <div className="bg-white/10 backdrop-blur-md p-6 rounded-xl text-center  shadow-lg transform transition-transform hover:scale-105 hover:shadow-2xl w-[50%] aspect-[3/2] flex flex-col justify-center items-center">
+          <div className="z-10 flex items-center justify-center blue-gradient rounded-full size-[120px] relative ">
             <img
-              src="/ai-interviewer-icon.png"
+              src="/interviewer.png"
               alt="AI Interviewer"
-              className="w-28 h-28 rounded-full mx-auto shadow-md"
+              className={`w-28 h-28 rounded-full mx-auto shadow-md `}
             />
+            {isSpeaking && (
+              <span className="absolute inline-flex size-5/6 animate-ping rounded-full bg-white opacity-75"></span>
+            )}
           </div>
           <p className="text-lg font-semibold text-gray-200">AI Interviewer</p>
         </div>
-        <div className="bg-white/10 backdrop-blur-md p-6 rounded-xl text-center shadow-lg transform transition-transform hover:scale-105 hover:shadow-2xl w-[50%] aspect-[3/2]">
+        <div className="bg-white/10 backdrop-blur-md p-6 rounded-xl text-center shadow-lg transform transition-transform hover:scale-105 hover:shadow-2xl w-[50%] aspect-[3/2] flex flex-col justify-center items-center">
           <div className="mb-4">
             <img
-              src="/user-icon.png"
+              src="/user.png"
               alt="You"
               className="w-28 h-28 rounded-full mx-auto shadow-md"
             />
@@ -129,19 +148,17 @@ const Agent = ({ username, userid, type }: Props) => {
       </div>
 
       {/* Footer */}
-      <p className="mb-6 text-gray-400 italic text-center">
-        My name is John Doe, nice to meet you!
-      </p>
+      <p className="mb-6 text-gray-400 italic text-center">{lastMessage}</p>
       {callStatus !== CallStatus.ACTIVE ? (
         <button
-          className="bg-gradient-to-r from-green-400 to-white text-black px-6 py-3 rounded-lg font-semibold shadow-md hover:shadow-lg transform transition-transform hover:scale-105"
+          className="bg-gradient-to-r from-green-400 to-white text-black px-6 py-3 rounded-lg font-semibold shadow-md hover:shadow-lg transform transition-transform hover:scale-105 cursor-pointer"
           onClick={handleCall}
         >
           {isCallInactiveOrFinished ? "Call" : "..."}
         </button>
       ) : (
         <button
-          className="bg-gradient-to-r from-red-400 to-white text-black px-6 py-3 rounded-lg font-semibold shadow-md hover:shadow-lg transform transition-transform hover:scale-105"
+          className="bg-gradient-to-r from-red-400 to-white text-black px-6 py-3 rounded-lg font-semibold shadow-md hover:shadow-lg transform transition-transform hover:scale-105 cursor-pointer"
           onClick={() => handleDisconnect()}
         >
           End

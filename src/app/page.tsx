@@ -1,6 +1,9 @@
 import PopularInterviews from "@/components/PopularInterviews";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { getCurrentUser } from "@/lib/actions/auth.action";
+import { getInterviewsById } from "@/lib/actions/interview.action";
+import { Interview } from "@/types";
 import {
   ArrowRight,
   BadgeCheck,
@@ -13,7 +16,11 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
-export default function Home() {
+export default async function Home() {
+  const users = await getCurrentUser();
+  const interviewsData = await getInterviewsById(users?.id as string);
+
+  console.log(interviewsData);
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
@@ -34,7 +41,7 @@ export default function Home() {
               size="lg"
               className="rounded-full border text-base px-8 py-6 h-auto animate-fade-in delay-200 animate-pulse-slow"
             >
-              <Link href="/create">
+              <Link href="/interview">
                 Create Your Interview <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
@@ -61,12 +68,6 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <FeatureCard
-              icon={<Briefcase className="h-10 w-10 text-primary" />}
-              title="Choose Your Interview Type"
-              description="Select from technical or non-technical interviews that match your career goals."
-              delay="delay-100"
-            />
-            <FeatureCard
               icon={<Brain className="h-10 w-10 text-primary" />}
               title="AI-Powered Questions"
               description="Our AI generates relevant questions based on your selected topics."
@@ -78,6 +79,12 @@ export default function Home() {
               description="Practice in a realistic environment and gain confidence for your real interviews."
               delay="delay-300"
             />
+            <FeatureCard
+              icon={<Briefcase className="h-10 w-10 text-primary" />}
+              title="Detailed Feeback"
+              description="Get detailed feedback from the interviewer and improve for next time"
+              delay="delay-100"
+            />
           </div>
         </div>
       </section>
@@ -87,7 +94,23 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Popular Interview Templates
+              Your Previous Interviews
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Practice your past interviews again to refine your skills and
+              build confidence for future opportunities.
+            </p>
+          </div>
+
+          <PopularInterviews interviewData={interviewsData} />
+        </div>
+      </section>
+
+      <section className="py-20 md:py-28 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Other Interview Templates
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Jump start your interview practice with these ready-to-use
@@ -95,7 +118,7 @@ export default function Home() {
             </p>
           </div>
 
-          <PopularInterviews />
+          <PopularInterviews interviewData={interviewsData} />
         </div>
       </section>
 
@@ -117,7 +140,7 @@ export default function Home() {
               icon={<Code className="h-16 w-16 text-primary" />}
               title="Technical Interviews"
               description="Practice coding problems, system design, and technical concepts for software engineering roles."
-              to="/create-interview?type=technical"
+              to="/interview"
               buttonText="Create Technical Interview"
               className="animate-slide-in"
             />
@@ -125,7 +148,7 @@ export default function Home() {
               icon={<MessageSquare className="h-16 w-16 text-primary" />}
               title="Non-Technical Interviews"
               description="Practice behavioral questions, situational interviews, and communication skills."
-              to="/create-interview?type=non-technical"
+              to="/interview"
               buttonText="Create Behavioral Interview"
               className="animate-slide-in delay-100"
             />
@@ -184,7 +207,7 @@ export default function Home() {
             size="lg"
             className="rounded-full text-base px-8 py-6 h-auto group"
           >
-            <Link href="/create-interview">
+            <Link href="/interview-interview">
               Get Started Now{" "}
               <ChevronRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </Link>
