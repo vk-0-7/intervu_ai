@@ -2,7 +2,10 @@ import PopularInterviews from "@/components/PopularInterviews";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { getCurrentUser } from "@/lib/actions/auth.action";
-import { getInterviewsById } from "@/lib/actions/interview.action";
+import {
+  getInterviewsById,
+  getOtherUsersInterviews,
+} from "@/lib/actions/interview.action";
 import { Interview } from "@/types";
 import {
   ArrowRight,
@@ -18,7 +21,10 @@ import Link from "next/link";
 
 export default async function Home() {
   const users = await getCurrentUser();
-  const interviewsData = await getInterviewsById(users?.id as string);
+  const [interviewsData, otherInterview] = await Promise.all([
+    getInterviewsById(users?.id as string),
+    getOtherUsersInterviews(users?.id as string),
+  ]);
 
   console.log(interviewsData);
   return (
@@ -118,7 +124,7 @@ export default async function Home() {
             </p>
           </div>
 
-          <PopularInterviews interviewData={interviewsData} />
+          <PopularInterviews interviewData={otherInterview} />
         </div>
       </section>
 

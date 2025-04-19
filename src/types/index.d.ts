@@ -4,8 +4,7 @@ export type UserProps = {
   id: string;
 };
 interface Interview {
-  _id?: string;
-  id?: string;
+  id: string;
   role: string;
   level: string;
   questions: string[];

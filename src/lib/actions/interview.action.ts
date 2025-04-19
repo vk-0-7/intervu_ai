@@ -7,7 +7,7 @@ export const getInterviewsById = async (userId: string) => {
   try {
     const interviewData = await db
       .collection("interview")
-      .where("id", "==", userId)
+      .where("userId", "==", userId)
       .get();
     console.log(interviewData?.docs);
 
@@ -23,6 +23,25 @@ export const getInterviewsById = async (userId: string) => {
   }
 
   //   console.log(abs);
+};
+
+export const getOtherUsersInterviews = async (userId: string) => {
+  try {
+    const interview = await db
+      .collection("interview")
+      .where("userId", "!=", userId)
+      .get();
+
+    return interview.docs?.map((doc) => {
+      const data = doc.data();
+      return {
+        id: doc.id,
+        ...data,
+      };
+    }) as Interview[];
+  } catch (error) {
+    console.log("Error getting Interviews", error);
+  }
 };
 
 export const getInterviewById = async (id: string) => {
