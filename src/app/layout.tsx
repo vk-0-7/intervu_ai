@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navbar } from "@/components/Navbar/navbar";
 import Footer from "@/components/footer/footer";
 import { isAuthenticated } from "@/lib/actions/auth.action";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,6 +35,7 @@ export default async function RootLayout({
         <Navbar auth={auth} />
         {children}
         <Footer />
+        <Toaster />
       </body>
     </html>
   );

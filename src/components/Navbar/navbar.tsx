@@ -29,7 +29,7 @@ export const Navbar = ({ auth }: { auth: boolean }) => {
               Home
             </Link>
             <Link
-              href="/interview-interview"
+              href="/interview"
               className="text-foreground/80 hover:text-foreground transition-colors"
             >
               Create Interview
@@ -83,7 +83,7 @@ export const Navbar = ({ auth }: { auth: boolean }) => {
               Home
             </Link>
             <Link
-              href="/interview-interview"
+              href="/interview"
               className="py-2 text-foreground/80 hover:text-foreground transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >

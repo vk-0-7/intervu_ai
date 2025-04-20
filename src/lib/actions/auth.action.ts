@@ -9,8 +9,10 @@ export async function signUP(params: {
   name: string;
   email: string;
   password?: string;
+  credits?: number;
+  activePlan?: string;
 }) {
-  const { uid, name, email } = params;
+  const { uid, name, email, credits, activePlan } = params;
 
   try {
     const userRecord = await db.collection("users").doc(uid).get();
@@ -24,6 +26,8 @@ export async function signUP(params: {
     await db.collection("users").doc(uid).set({
       name,
       email,
+      credits,
+      activePlan,
     });
     return {
       success: true,

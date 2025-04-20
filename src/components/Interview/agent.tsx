@@ -114,10 +114,10 @@ const Agent = ({ username, userid, type, interviewid, questions }: Props) => {
   return (
     <>
       <h1 className="mb-5 text-5xl font-extrabold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-gray-500 to-white">
-        Intervu
+        {type == "interview" ? "" : "Intervu"}
       </h1>
       <h2 className="mb-12 text-2xl font-medium text-gray-300">
-        Interview Generation
+        {type == "interview" ? "" : "Interview Generation"}
       </h2>
 
       {/* Cards */}

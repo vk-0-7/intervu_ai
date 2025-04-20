@@ -96,37 +96,41 @@ export default async function Home() {
       </section>
 
       {/* Popular Interview Types - NEW SECTION */}
-      <section className="py-20 md:py-28 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Your Previous Interviews
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Practice your past interviews again to refine your skills and
-              build confidence for future opportunities.
-            </p>
+      {!!interviewsData?.length && (
+        <section className="py-20 md:py-28 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                Your Previous Interviews
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Practice your past interviews again to refine your skills and
+                build confidence for future opportunities.
+              </p>
+            </div>
+
+            <PopularInterviews interviewData={interviewsData?.slice(0, 8)} />
           </div>
+        </section>
+      )}
 
-          <PopularInterviews interviewData={interviewsData} />
-        </div>
-      </section>
+      {!!otherInterview?.length && (
+        <section className="py-20 md:py-28 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                Other Interview Templates
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Jump start your interview practice with these ready-to-use
+                templates
+              </p>
+            </div>
 
-      <section className="py-20 md:py-28 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Other Interview Templates
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Jump start your interview practice with these ready-to-use
-              templates
-            </p>
+            <PopularInterviews interviewData={otherInterview?.slice(0, 8)} />
           </div>
-
-          <PopularInterviews interviewData={otherInterview} />
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Interview Types */}
       <section className="py-20 md:py-28 bg-gray-50">
@@ -213,7 +217,7 @@ export default async function Home() {
             size="lg"
             className="rounded-full text-base px-8 py-6 h-auto group"
           >
-            <Link href="/interview-interview">
+            <Link href="/interview">
               Get Started Now{" "}
               <ChevronRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </Link>

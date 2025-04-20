@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
@@ -23,47 +25,50 @@ const plans: Plan[] = [
   {
     id: "basic",
     name: "Basic",
-    price: "$9",
+    price: "$0",
     description: "Essential features for individuals",
     features: [
-      { title: "5 interview sessions / month", included: true },
+      { title: "2 interview sessions", included: true },
       { title: "Basic question templates", included: true },
       { title: "Export as PDF", included: false },
       { title: "AI-powered feedback", included: false },
+      { title: "Improvement Guide", included: false },
       { title: "Priority support", included: false },
     ],
   },
   {
     id: "pro",
-    name: "Professional",
-    price: "$19",
+    name: "Beginer",
+    price: "$5",
     description: "Enhanced features for professionals",
     features: [
-      { title: "20 interview sessions / month", included: true },
+      { title: "20 interview sessions", included: true },
       { title: "Advanced question templates", included: true },
       { title: "Export as PDF", included: true },
       { title: "AI-powered feedback", included: true },
+      { title: "Improvement Guide", included: true },
       { title: "Priority support", included: false },
     ],
     recommended: true,
   },
   {
-    id: "enterprise",
-    name: "Enterprise",
-    price: "$49",
-    description: "Complete solution for teams",
+    id: "professional",
+    name: "Professional",
+    price: "$20",
+    description: "Complete solution for You",
     features: [
-      { title: "Unlimited interview sessions", included: true },
+      { title: "100 interview sessions", included: true },
       { title: "Custom question templates", included: true },
       { title: "Export as PDF", included: true },
       { title: "Advanced AI-powered feedback", included: true },
+      { title: "Improvement Guide", included: true },
       { title: "24/7 Priority support", included: true },
     ],
   },
 ];
 
 const SubscriptionPlans: React.FC = () => {
-  const [currentPlan, setCurrentPlan] = React.useState("pro");
+  const [currentPlan, setCurrentPlan] = React.useState("basic");
 
   const handlePlanChange = (value: string) => {
     setCurrentPlan(value);

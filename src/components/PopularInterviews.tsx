@@ -7,6 +7,7 @@ import { FileText, BookOpen, Code, Users, ArrowRight } from "lucide-react";
 import { getCurrentUser } from "@/lib/actions/auth.action";
 import { getInterviewsById } from "@/lib/actions/interview.action";
 import { Interview } from "@/types";
+import StackImage from "./ui/stackImage";
 
 const InterviewTemplate: React.FC<Interview> = ({
   role,
@@ -27,24 +28,24 @@ const InterviewTemplate: React.FC<Interview> = ({
   return (
     <Card className="h-full flex flex-col overflow-hidden hover:shadow-md transition-shadow duration-300">
       <CardContent className="pt-6 flex-grow">
-        <div className="flex items-center gap-2 mb-3">
-          <div className="p-2 rounded-md bg-primary/10 text-primary"></div>
-          <Badge variant="outline" className={`${difficultyColor} border-0`}>
+        <div className="flex items-center gap-6 mb-3">
+          {/* <div className="p-2 rounded-md bg-primary/10 text-primary"></div> */}
+          <StackImage />
+          <div
+            className={` px-2 py-1 rounded-md font-medium ${difficultyColor}`}
+          >
             {level}
-          </Badge>
+          </div>
         </div>
         <h3 className="text-xl font-semibold mb-2">{role}</h3>
         {/* <p className="text-muted-foreground mb-4">{description}</p> */}
-        <div className="grid grid-cols-2 gap-2 text-sm">
+        <div className="gap-2 text-sm">
           <div className="flex items-center gap-1">
-            {/* <span className="font-medium">Questions:</span> {questions} */}
+            <span className="font-medium">Teckstack:</span> {techstack}
           </div>
-          <div className="flex items-center gap-1">
-            <span className="font-medium">Duration:</span> {createdAt}
-          </div>
-          <div className="flex items-center gap-1 col-span-2">
-            <span className="font-medium">Type:</span> {type}
-          </div>
+        </div>
+        <div className="flex items-center gap-1 col-span-2 capitalize">
+          <span className="font-medium ">Type:</span> {type}
         </div>
       </CardContent>
       <CardFooter className="pt-2 pb-6">
@@ -115,9 +116,15 @@ const PopularInterviews: React.FC<PopularInterviewsProps> = ({
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      {interviewData?.map((interview, index) => (
-        <InterviewTemplate key={index} {...interview} />
-      ))}
+      {interviewData?.length > 0 ? (
+        <>
+          {interviewData?.map((interview, index) => (
+            <InterviewTemplate key={index} {...interview} />
+          ))}
+        </>
+      ) : (
+        <h3> No any record found for Interview </h3>
+      )}
     </div>
   );
 };

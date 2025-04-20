@@ -2,6 +2,8 @@ export type UserProps = {
   name: string;
   email: string;
   id: string;
+  credits?: number;
+  activePlans?: string;
 };
 interface Interview {
   id: string;

@@ -82,6 +82,8 @@ const SignUp: React.FC = () => {
       name: fullName,
       email,
       password,
+      credits: 2,
+      activePlan: "basic",
     });
     if (!result?.success) {
       toast(result?.message);
