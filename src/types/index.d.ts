@@ -16,3 +16,18 @@ interface Interview {
   type: string;
   finalized: boolean;
 }
+interface FeedbackProps {
+  userId: string;
+  interviewId: string;
+  id: string;
+  totalScore: number;
+  categoryScores: Array<{
+    name: string;
+    score: number;
+    comment: string;
+  }>;
+  strengths: string[];
+  areasForImprovement: string[];
+  finalAssessment: string;
+  createdAt: string;
+}

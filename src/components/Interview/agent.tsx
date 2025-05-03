@@ -1,5 +1,6 @@
 "use client";
 
+import { createFeedback } from "@/lib/actions/interview.action";
 import { interviewer } from "@/lib/constants";
 import { vapi } from "@/lib/vapi.sdk";
 import { Message } from "ai";
@@ -77,7 +78,19 @@ const Agent = ({ username, userid, type, interviewid, questions }: Props) => {
   }, []);
 
   useEffect(() => {
-    if (callStatus === CallStatus.FINISHED) router.push("/");
+    console.log(callStatus);
+    if (type == "generate") {
+      if (callStatus === CallStatus.FINISHED) router.push("/");
+    } else {
+      if (callStatus === CallStatus.FINISHED) {
+        createFeedback({
+          interviewId: interviewid as string,
+          userId: userid,
+          transcript: messages,
+        });
+        router.push(`/interview/${interviewid}/feedback`);
+      }
+    }
   }, [messages, callStatus, userid, type]);
 
   const handleCall = async () => {
@@ -110,6 +123,8 @@ const Agent = ({ username, userid, type, interviewid, questions }: Props) => {
   };
   const lastMessage = messages[messages.length - 1]?.content;
   const isCallInactiveOrFinished = CallStatus.INACTIVE || CallStatus.FINISHED;
+
+  // console.log(messages);
 
   return (
     <>

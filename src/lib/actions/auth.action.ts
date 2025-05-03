@@ -63,6 +63,29 @@ export async function signIN(params: { email: string; idToken: string }) {
   }
 }
 
+export async function updateUserById({
+  userId,
+  ...data
+}: {
+  userId: string;
+  data: Partial<UserProps>;
+}) {
+  try {
+    const userRef = db.collection("users").doc(userId);
+    await userRef.update(data);
+    return {
+      success: true,
+      message: "User updated successfully",
+    };
+  } catch (error) {
+    console.error("Error updating user:", error);
+    return {
+      success: false,
+      message: "User update failed",
+    };
+  }
+}
+
 export async function setSessionCookie(idToken: string) {
   const cookieStore = await cookies();
   const sessionCookie = await auth.createSessionCookie(idToken, {

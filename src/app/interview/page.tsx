@@ -11,7 +11,7 @@ const Interview = async () => {
   return (
     <div className="bg-gradient-to-br from-[#767575] via-black to-gray-900 text-white h-screen flex flex-col items-center justify-center">
       {/* Header */}
-      <Agent username={user.name} userid={user.id} type={"generate"} />
+      <Agent username={user?.name} userid={user?.id} type={"generate"} />
     </div>
   );
 };

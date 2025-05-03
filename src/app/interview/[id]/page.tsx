@@ -53,14 +53,14 @@ const InterviewDetails = async ({ params }: RouteParams) => {
         </div>
 
         {/* Main Page Content */}
-        <div className="absolute inset-0 z-0">
+        {/* <div className="absolute inset-0 z-0">
           <h1 className="text-3xl font-bold text-white mb-2 text-center">
             {interview?.role}
           </h1>
           <p className="text-gray-500 text-lg mb-4 text-center">
             {interview?.level}
           </p>
-        </div>
+        </div> */}
       </div>
     );
   }
