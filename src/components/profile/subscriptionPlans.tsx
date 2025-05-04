@@ -1,11 +1,12 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
+import { createOrder } from "@/lib/actions/order.action";
 
 interface PlanFeature {
   title: string;
@@ -20,12 +21,17 @@ interface Plan {
   features: PlanFeature[];
   recommended?: boolean;
 }
+declare global {
+  interface Window {
+    Razorpay: any;
+  }
+}
 
 const plans: Plan[] = [
   {
     id: "basic",
     name: "Basic",
-    price: "$0",
+    price: "₹ 0",
     description: "Essential features for individuals",
     features: [
       { title: "2 interview sessions", included: true },
@@ -37,9 +43,9 @@ const plans: Plan[] = [
     ],
   },
   {
-    id: "pro",
+    id: "beginer",
     name: "Beginer",
-    price: "$5",
+    price: "₹ 99",
     description: "Enhanced features for professionals",
     features: [
       { title: "20 interview sessions", included: true },
@@ -54,7 +60,7 @@ const plans: Plan[] = [
   {
     id: "professional",
     name: "Professional",
-    price: "$20",
+    price: "₹ 599",
     description: "Complete solution for You",
     features: [
       { title: "100 interview sessions", included: true },
@@ -67,15 +73,74 @@ const plans: Plan[] = [
   },
 ];
 
+const PRICE = {
+  basic: 0,
+  beginer: 99,
+  professional: 599,
+};
+
 const SubscriptionPlans: React.FC = () => {
-  const [currentPlan, setCurrentPlan] = React.useState("basic");
+  const [currentPlan, setCurrentPlan] = React.useState("beginer");
+  useEffect(() => {
+    // Load Razorpay script
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.async = true;
+    document.body.appendChild(script);
+  }, []);
 
   const handlePlanChange = (value: string) => {
     setCurrentPlan(value);
   };
 
-  const handleSubscribe = () => {
-    toast("Subscription updated");
+  const handleSubscribe = async () => {
+    try {
+      const response = await createOrder({ amount: PRICE[currentPlan] });
+      // const orderData = await response.json();
+      // console.log("orderData->", response);
+
+      const options = {
+        key: "rzp_test_2IHiVuu6jwO1LE",
+        amount: PRICE[currentPlan], // Amount from the order
+        currency: "INR",
+        name: "Intervue ",
+        description: "Subscription Purchased",
+        image: "your_logo_url",
+        order_id: response.id, // Order ID from the created order
+        // handler: async function (response) {
+        //   // Verify payment on your server
+        //   const verifyResponse = await fetch("/verify-payment", {
+        //     method: "POST",
+        //     headers: {
+        //       "Content-Type": "application/json",
+        //     },
+        //     body: JSON.stringify(response),
+        //   });
+
+        //   const verifyData = await verifyResponse.json();
+
+        //   if (verifyData.status === "ok") {
+        //     alert("Payment successful!");
+        //     // Redirect to success page or update UI
+        //   } else {
+        //     alert("Payment verification failed.");
+        //   }
+        // },
+        prefill: {
+          name: "Customer Name",
+          email: "customer@example.com",
+          contact: "9999999999",
+        },
+        theme: {
+          color: "#3399cc",
+        },
+      };
+
+      const rzp1 = new window.Razorpay(options);
+      rzp1.open();
+    } catch (error) {
+      toast.error("Error creating order. Please try again.");
+    }
   };
 
   return (
@@ -147,7 +212,9 @@ const SubscriptionPlans: React.FC = () => {
       </RadioGroup>
 
       <div className="pt-4 flex justify-end">
-        <Button onClick={handleSubscribe}>Update Subscription</Button>
+        <Button onClick={handleSubscribe} disabled={currentPlan == "basic"}>
+          Update Subscription
+        </Button>
       </div>
     </div>
   );
