@@ -1,26 +1,24 @@
 "use server";
 
 import { db } from "@/firebase/admin";
+import Razorpay from "razorpay";
 
 export const createOrder = async ({ amount }: { amount: number }) => {
-  console.log("amount", amount);
+  const instance = new Razorpay({
+    key_id: process.env.RAZORPAY_KEY_ID,
+    key_secret: process.env.RAZORPAY_KEY_SECRET,
+  });
+  const options = {
+    amount: Number(amount * 100), // amount in the smallest currency unit
+    currency: "INR",
+    receipt: "order_rcptid_11",
+  };
   try {
-    const orderRef = await db.collection("orders").add({
-      amount: amount,
-      paid: false,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      status: "pending",
-      paymentMethod: "razorpay",
-      razorpayOrderId: null,
-      razorpayPaymentId: null,
-      razorpaySignature: null,
-      userId: null,
-    });
-    const orderData = await orderRef.get();
-    // console.log("orderData.data", orderData.data());
-    return { id: orderRef?.id, ...orderData.data() };
+    const order = await instance.orders.create(options);
+    // console.log("order", order);
+    return order;
   } catch (error) {
-    console.log("Error creating order", error);
+    console.log("Error creating Razorpay order", error);
   }
 };
+

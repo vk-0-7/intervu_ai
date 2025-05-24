@@ -20,13 +20,13 @@ import {
 import Link from "next/link";
 
 export default async function Home() {
-  const users = await getCurrentUser();
-  const [interviewsData, otherInterview] = await Promise.all([
-    getInterviewsById(users?.id as string),
-    getOtherUsersInterviews(users?.id as string),
-  ]);
+  // const users = await getCurrentUser();
+  // const [interviewsData, otherInterview] = await Promise.all([
+  //   getInterviewsById(users?.id as string),
+  //   getOtherUsersInterviews(users?.id as string),
+  // ]);
 
-  console.log(interviewsData);
+  // console.log(interviewsData);
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
@@ -96,7 +96,7 @@ export default async function Home() {
       </section>
 
       {/* Popular Interview Types - NEW SECTION */}
-      {!!interviewsData?.length && (
+      {/* {!!interviewsData?.length && (
         <section className="py-20 md:py-28 bg-white">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
@@ -112,9 +112,9 @@ export default async function Home() {
             <PopularInterviews interviewData={interviewsData?.slice(0, 8)} />
           </div>
         </section>
-      )}
+      )} */}
 
-      {!!otherInterview?.length && (
+      {/* {!!otherInterview?.length && (
         <section className="py-20 md:py-28 bg-white">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
@@ -130,7 +130,7 @@ export default async function Home() {
             <PopularInterviews interviewData={otherInterview?.slice(0, 8)} />
           </div>
         </section>
-      )}
+      )} */}
 
       {/* Interview Types */}
       <section className="py-20 md:py-28 bg-gray-50">

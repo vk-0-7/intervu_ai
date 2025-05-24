@@ -27,6 +27,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const auth = await isAuthenticated();
+
   return (
     <html lang="en">
       <body
@@ -34,6 +35,7 @@ export default async function RootLayout({
       >
         <Navbar auth={auth} />
         {children}
+
         <Footer />
         <Toaster />
       </body>

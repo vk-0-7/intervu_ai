@@ -101,40 +101,24 @@ const SubscriptionPlans: React.FC = () => {
 
       const options = {
         key: "rzp_test_2IHiVuu6jwO1LE",
-        amount: PRICE[currentPlan], // Amount from the order
+        amount: response.amount,
         currency: "INR",
         name: "Intervue ",
         description: "Subscription Purchased",
         image: "your_logo_url",
-        order_id: response.id, // Order ID from the created order
-        // handler: async function (response) {
-        //   // Verify payment on your server
-        //   const verifyResponse = await fetch("/verify-payment", {
-        //     method: "POST",
-        //     headers: {
-        //       "Content-Type": "application/json",
-        //     },
-        //     body: JSON.stringify(response),
-        //   });
-
-        //   const verifyData = await verifyResponse.json();
-
-        //   if (verifyData.status === "ok") {
-        //     alert("Payment successful!");
-        //     // Redirect to success page or update UI
-        //   } else {
-        //     alert("Payment verification failed.");
-        //   }
-        // },
+        order_id: response.id,
+        callback_url: "http://localhost:3002/api/razorpay",
         prefill: {
-          name: "Customer Name",
-          email: "customer@example.com",
+          name: "Vivek",
+          email: "vivek@example.com",
           contact: "9999999999",
         },
         theme: {
           color: "#3399cc",
         },
       };
+
+      console.log(response);
 
       const rzp1 = new window.Razorpay(options);
       rzp1.open();
