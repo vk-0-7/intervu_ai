@@ -96,8 +96,6 @@ const SubscriptionPlans: React.FC = () => {
   const handleSubscribe = async () => {
     try {
       const response = await createOrder({ amount: PRICE[currentPlan] });
-      // const orderData = await response.json();
-      // console.log("orderData->", response);
 
       const options = {
         key: "rzp_test_2IHiVuu6jwO1LE",
