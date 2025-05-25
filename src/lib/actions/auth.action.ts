@@ -2,7 +2,9 @@
 
 import { auth, db } from "@/firebase/admin";
 import { UserProps } from "@/types";
+import { getAuth } from "firebase/auth";
 import { cookies } from "next/headers";
+import { NextResponse } from "next/server";
 
 export async function signUP(params: {
   uid: string;
@@ -65,14 +67,16 @@ export async function signIN(params: { email: string; idToken: string }) {
 
 export async function updateUserById({
   userId,
-  ...data
+  data,
 }: {
   userId: string;
   data: Partial<UserProps>;
 }) {
   try {
+    // console.log("data send to update user", data);
+    const { credits } = data;
     const userRef = db.collection("users").doc(userId);
-    await userRef.update(data);
+    await userRef.update({ credits });
     return {
       success: true,
       message: "User updated successfully",
@@ -132,3 +136,4 @@ export async function isAuthenticated() {
 
   return !!user;
 }
+

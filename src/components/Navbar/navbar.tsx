@@ -7,7 +7,7 @@ import { Brain, LogIn, Menu, UserPlus, X } from "lucide-react";
 export const Navbar = ({ auth }: { auth: boolean }) => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
-  console.log(auth);
+
 
   return (
     <header className="border-b">

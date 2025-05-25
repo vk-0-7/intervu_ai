@@ -4,7 +4,7 @@ import React from "react";
 
 const StackImage = () => {
   const logo = getRandomLogo();
-  console.log(logo);
+
   return (
     <div className="flex ">
       {logo?.map((i: string, ind: number) => {

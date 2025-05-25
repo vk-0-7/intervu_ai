@@ -2,11 +2,19 @@
 
 import { db } from "@/firebase/admin";
 import Razorpay from "razorpay";
+import { getCurrentUser } from "./auth.action";
+import { getAuth } from "firebase-admin/auth";
 
-export const createOrder = async ({ amount }: { amount: number }) => {
+export const createOrder = async ({
+  amount,
+  userId,
+}: {
+  amount: number;
+  userId: string;
+}) => {
   const instance = new Razorpay({
-    key_id: process.env.RAZORPAY_KEY_ID,
-    key_secret: process.env.RAZORPAY_KEY_SECRET,
+    key_id: process.env.RAZORPAY_LIVE_KEY,
+    key_secret: process.env.RAZORPAY_LIVE_SECRET,
   });
   const options = {
     amount: Number(amount * 100), // amount in the smallest currency unit
@@ -15,6 +23,17 @@ export const createOrder = async ({ amount }: { amount: number }) => {
   };
   try {
     const order = await instance.orders.create(options);
+
+    await db.collection("orders").add({
+      orderId: order.id,
+      userId,
+      amount: order.amount,
+      currency: order.currency,
+      status: false,
+      paid: false,
+      createdAt: new Date(),
+    });
+
     // console.log("order", order);
     return order;
   } catch (error) {

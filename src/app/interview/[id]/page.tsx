@@ -16,7 +16,6 @@ const InterviewDetails = async ({ params }: RouteParams) => {
 
   const interview = await getInterviewById(id);
 
-  console.log(interview);
 
   if (!interview) redirect("/interview");
 
@@ -75,6 +74,7 @@ const InterviewDetails = async ({ params }: RouteParams) => {
 
         <Agent
           userid={user?.id}
+          credits={user?.credits}
           username={user?.name}
           type="interview"
           interviewid={id}

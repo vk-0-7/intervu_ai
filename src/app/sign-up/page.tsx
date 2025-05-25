@@ -66,7 +66,6 @@ const SignUp: React.FC = () => {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     // Here you would typically call your auth service
-    console.log(values);
 
     const { fullName, email, password } = values;
 

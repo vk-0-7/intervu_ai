@@ -1,5 +1,6 @@
 "use client";
 
+import { updateUserById } from "@/lib/actions/auth.action";
 import { createFeedback } from "@/lib/actions/interview.action";
 import { interviewer } from "@/lib/constants";
 import { vapi } from "@/lib/vapi.sdk";
@@ -10,6 +11,7 @@ import React, { useEffect, useState } from "react";
 type Props = {
   username: string;
   userid: string;
+  credits?: number;
   type: string;
   interviewid?: string;
   questions?: string[];
@@ -27,7 +29,14 @@ type SavedMessages = {
   content: string;
 }[];
 
-const Agent = ({ username, userid, type, interviewid, questions }: Props) => {
+const Agent = ({
+  username,
+  userid,
+  credits,
+  type,
+  interviewid,
+  questions,
+}: Props) => {
   const [isSpeaking, setisSpeaking] = useState(false);
   const [callStatus, setCallStatus] = useState<CallStatus>(CallStatus.INACTIVE);
   const [messages, setMessages] = useState<SavedMessages>([]);
@@ -77,8 +86,12 @@ const Agent = ({ username, userid, type, interviewid, questions }: Props) => {
     };
   }, []);
 
+  const updateUser = async () => {
+    await updateUserById({ userId: userid, data: { credits: credits - 1 } });
+  };
+
   useEffect(() => {
-    console.log(callStatus);
+    
     if (type == "generate") {
       if (callStatus === CallStatus.FINISHED) router.push("/");
     } else {
@@ -89,6 +102,9 @@ const Agent = ({ username, userid, type, interviewid, questions }: Props) => {
           transcript: messages,
         });
         router.push(`/interview/${interviewid}/feedback`);
+      }
+      if (callStatus == CallStatus.ACTIVE) {
+        updateUser();
       }
     }
   }, [messages, callStatus, userid, type]);

@@ -21,7 +21,7 @@ export async function POST(request: Request) {
         The focus between behavioural and technical questions should lean towards: ${type}.
         The amount of questions required is: ${amount}.
         Please return only the questions, without any additional text.
-        The questions are going to be read by a voice assistant so do not use "/" or "*" or any other special characters which might break the voice assistant.
+        The questions are going to be read by a voice assistant so do not use "/" or "*" or any other special characters which might break the voice assistant.also,try to create that are most of the times unique and not repetitive . also focus on the most important questions that are asked in interviews for this role.please check the role as well as the level and techstack before generating the questions.also test some deep understanding of user about the role and techstack.dont ask only basic questions like about facing challenges or what is your strength or weakness etc. focus on the role and techstack and level of the user.
         Return the questions formatted like this:
         ["Question 1", "Question 2", "Question 3"]
         

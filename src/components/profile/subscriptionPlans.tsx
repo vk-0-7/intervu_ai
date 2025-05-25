@@ -7,6 +7,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { createOrder } from "@/lib/actions/order.action";
+import { getCurrentUser } from "@/lib/actions/auth.action";
 
 interface PlanFeature {
   title: string;
@@ -94,30 +95,69 @@ const SubscriptionPlans: React.FC = () => {
   };
 
   const handleSubscribe = async () => {
+    const user = await getCurrentUser();
+
+    if (!user) {
+      toast.error("Please log in to subscribe.");
+      return;
+    }
     try {
-      const response = await createOrder({ amount: PRICE[currentPlan] });
+      const response = await createOrder({
+        amount: PRICE[currentPlan],
+        userId: user.id,
+      });
+
+      console.log(response);
 
       const options = {
-        key: "rzp_test_2IHiVuu6jwO1LE",
+        key: process.env.RAZORPAY_LIVE_KEY,
         amount: response.amount,
+
         currency: "INR",
         name: "Intervue ",
         description: "Subscription Purchased",
-        image: "your_logo_url",
         order_id: response.id,
-        callback_url: "http://localhost:3002/api/razorpay",
+        handler: async function (response) {
+          const { razorpay_payment_id, razorpay_order_id, razorpay_signature } =
+            response;
+
+          try {
+            // 👇 Call your backend to verify payment
+            const verifyRes = await fetch("/api/razorpay", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                razorpay_payment_id,
+                razorpay_order_id,
+                razorpay_signature,
+              }),
+            });
+
+            const result = await verifyRes.json();
+
+            if (result.success) {
+              window.location.href = `/success?orderId=${result.orderId}&paymentId=${response.razorpay_payment_id}&amount=${result.amount}&credits=${result.credits}`;
+            } else {
+              toast.error(
+                "Payment verification failed. Please contact support."
+              );
+            }
+          } catch (err) {
+            window.location.href = "/failed";
+          }
+        },
+
         prefill: {
           name: "Vivek",
-          email: "vivek@example.com",
-          contact: "9999999999",
+          email: "vivekr4400@example.com",
+          contact: "9608945441",
         },
         theme: {
           color: "#3399cc",
         },
       };
-
-      console.log(response);
-
       const rzp1 = new window.Razorpay(options);
       rzp1.open();
     } catch (error) {

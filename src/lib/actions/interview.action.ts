@@ -12,7 +12,6 @@ export const getInterviewsById = async (userId: string) => {
       .collection("interview")
       .where("userId", "==", userId)
       .get();
-    console.log(interviewData?.docs);
 
     return interviewData.docs?.map((doc) => {
       const data = doc.data();
@@ -138,8 +137,6 @@ export const createFeedback = async (props: FeedbackProps) => {
       ? db.collection("feedback").doc(feedbackId)
       : db.collection("feedback").doc();
 
-    console.log("feedbackRef value", feedbackRef.id);
-
     await feedbackRef.set(feedback);
 
     return { success: true, feedbackId: feedbackRef.id };
@@ -162,7 +159,7 @@ export const getFeedbackByInterviewId = async ({
       .where("interviewId", "==", interviewId)
       .where("userId", "==", userId)
       .get();
-    console.log(feedbackData?.docs);
+    
 
     return feedbackData.docs?.map((doc) => {
       const data = doc.data();
