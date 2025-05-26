@@ -46,7 +46,7 @@ const plans: Plan[] = [
   {
     id: "beginer",
     name: "Beginer",
-    price: "₹ 99",
+    price: "₹ 9",
     description: "Enhanced features for professionals",
     features: [
       { title: "20 interview sessions", included: true },
@@ -61,7 +61,7 @@ const plans: Plan[] = [
   {
     id: "professional",
     name: "Professional",
-    price: "₹ 599",
+    price: "₹ 12",
     description: "Complete solution for You",
     features: [
       { title: "100 interview sessions", included: true },
@@ -76,8 +76,8 @@ const plans: Plan[] = [
 
 const PRICE = {
   basic: 0,
-  beginer: 99,
-  professional: 599,
+  beginer: 9,
+  professional: 12,
 };
 
 const SubscriptionPlans: React.FC = () => {

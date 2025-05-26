@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
     }
     const orderData = orderDocs[0]?.data();
     const userId = orderData?.userId;
-    const credits = orderData?.amount === 9900 ? 20 : 100;
+    const credits = orderData?.amount === 900 ? 20 : 100;
 
     const userDataRef = await db.collection("users").doc(userId);
     const userSnapshot = await userDataRef.get();
