@@ -110,7 +110,7 @@ const SubscriptionPlans: React.FC = () => {
       console.log(response);
 
       const options = {
-        key: process.env.RAZORPAY_LIVE_KEY,
+        key: process.env.NEXT_PUBLIC_RAZORPAY_LIVE_KEY,
         amount: response.amount,
 
         currency: "INR",

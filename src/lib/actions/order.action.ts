@@ -13,8 +13,8 @@ export const createOrder = async ({
   userId: string;
 }) => {
   const instance = new Razorpay({
-    key_id: process.env.RAZORPAY_LIVE_KEY,
-    key_secret: process.env.RAZORPAY_LIVE_SECRET,
+    key_id: process.env.NEXT_PUBLIC_RAZORPAY_LIVE_KEY,
+    key_secret: process.env.NEXT_PUBLIC_RAZORPAY_LIVE_SECRET,
   });
   const options = {
     amount: Number(amount * 100), // amount in the smallest currency unit
