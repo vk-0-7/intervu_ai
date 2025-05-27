@@ -66,6 +66,7 @@ const ContactForm = () => {
           Have a question? We'd love to hear from you. Send us a message and
           we'll respond as soon as possible.
         </p>
+        <h3>For inquiries, please contact vivekr4400@gmail.com</h3>
       </div>
 
       {submitSuccess ? (

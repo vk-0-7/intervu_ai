@@ -18,6 +18,7 @@ interface Interview {
 }
 interface FeedbackProps {
   userId: string;
+  id?: string;
   interviewId: string;
   id: string;
   totalScore: number;
